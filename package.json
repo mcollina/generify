@@ -6,6 +6,9 @@
   "scripts": {
     "test": "tape test.js | faucet"
   },
+  "bin": {
+    "generify": "./generify.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mcollina/generify.git"

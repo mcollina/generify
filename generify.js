@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+'use strict'
 
 var walker    = require('walker')
   , fs        = require('fs')
@@ -5,12 +8,19 @@ var walker    = require('walker')
   , split     = require('split2')
   , mkdirp    = require('mkdirp')
 
+module.exports = generify
+
+if (require.main === module) execute()
+
 function generify(source, dest, data, done) {
   var count   = 1 // the walker counts as 1
     , keys    = Object.keys(data)
 
   // needed for the path replacing to work
   source = path.resolve(source)
+
+  if (!done) done = function() {}
+  if (!data) data = {}
 
   walker(source)
     .on('file', function(file) {
@@ -49,4 +59,19 @@ function generify(source, dest, data, done) {
   }
 }
 
-module.exports = generify
+function execute() {
+  if (process.argv.length < 4) {
+    console.log('Usage: generify template destination [json file]')
+    process.exit(1)
+  }
+
+  var source = process.argv[2]
+    , dest   = process.argv[3]
+    , json   = {}
+
+  if (process.argv[4]) {
+    json = JSON.parse(fs.readFileSync(process.argv[4]))
+  }
+
+  generify(source, dest, json)
+}
