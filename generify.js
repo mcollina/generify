@@ -9,6 +9,9 @@ function generify(source, dest, data, done) {
   var count   = 1 // the walker counts as 1
     , keys    = Object.keys(data)
 
+  // needed for the path replacing to work
+  source = path.resolve(source)
+
   walker(source)
     .on('file', function(file) {
       var relativePath = file.replace(source, '')
