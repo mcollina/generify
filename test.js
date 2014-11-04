@@ -76,7 +76,7 @@ function createTest(err, expected, fixture) {
         .on('file', function(file) {
           fs.readFile(file, function(err, data) {
             file = file.replace(dest, '')
-            t.deepEqual(data.toString(), expected[file], file + ' not matching');
+            t.deepEqual(data.toString(), expected[file], file + ' matching');
           })
         })
     })
