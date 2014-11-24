@@ -27,6 +27,7 @@
   "devDependencies": {
     "faucet": "0.0.1",
     "osenv": "^0.1.0",
+    "rimraf": "^2.2.8",
     "tape": "^3.0.0"
   },
   "dependencies": {

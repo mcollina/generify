@@ -24,7 +24,7 @@ function generify(source, dest, data, done) {
 
   walker(source)
     .on('file', function(file) {
-      var relativePath = file.replace(source, '')
+      var relativePath = path.relative(source, file).replace(/^__/, '.')
         , destFile = path.join(dest, relativePath)
 
       count++

@@ -4,6 +4,7 @@ var generify  = require('./')
   , fs        = require('fs')
   , path      = require('path')
   , osenv     = require('osenv')
+  , rimraf    = require('rimraf')
   , base      = './fixture'
 
 
@@ -65,7 +66,7 @@ function createTest(err, expected, fixture) {
   }
 
   test(fixture, function(t) {
-    t.plan(Object.keys(expected).length + 1)
+    t.plan(Object.keys(expected).length + 2)
 
     var dest = path.join(osenv.tmpdir(), 'generify', fixture)
       , data = { hello: 'hello world' }
@@ -77,6 +78,11 @@ function createTest(err, expected, fixture) {
           fs.readFile(file, function(err, data) {
             file = file.replace(dest, '')
             t.deepEqual(data.toString(), expected[file], file + ' matching');
+          })
+        })
+        .on('end', function() {
+          rimraf(dest, function(err) {
+            t.notOk(err, 'no error in deleting everything')
           })
         })
     })

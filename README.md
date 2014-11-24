@@ -24,6 +24,12 @@ generify(source, dest, data, function(err) {
 This will replace all the `__hello__` patterns found in all files
 with the `'hello world'` string.
 
+### `__` handling
+
+If a file begins with `__` that will be automatically converted into a
+`.`. This is useful for generating `.gitignore` files, as on NPM a
+`.gitignore` file will be automatically converted into a `.npmignore`.
+
 Executable
 ----------
 
