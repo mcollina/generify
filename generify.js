@@ -2,15 +2,14 @@
 
 'use strict'
 
-var walker = require('walker')
-var fs = require('fs')
-var path = require('path')
-var split = require('split2')
-var mkdirp = require('mkdirp')
+const walker = require('walker')
+const fs = require('fs')
+const path = require('path')
+const split = require('split2')
+const mkdirp = require('mkdirp')
+const pump = require('pump')
 
 module.exports = generify
-
-if (require.main === module) execute()
 
 function generify (source, dest, data, done) {
   var count = 1 // the walker counts as 1
@@ -30,7 +29,7 @@ function generify (source, dest, data, done) {
       count++
 
       mkdirp(path.dirname(destFile), function (err) {
-        if (err) return done(err)
+        if (err) return complete(err)
 
         copyAndReplace(file, destFile)
       })
@@ -39,10 +38,11 @@ function generify (source, dest, data, done) {
     .on('error', done)
 
   function copyAndReplace (source, dest) {
-    fs.createReadStream(source)
-      .pipe(split(replaceLine))
-      .pipe(fs.createWriteStream(dest))
-      .on('finish', complete)
+    pump(
+      fs.createReadStream(source),
+      split(replaceLine),
+      fs.createWriteStream(dest),
+      complete)
   }
 
   function replaceLine (line) {
@@ -52,7 +52,13 @@ function generify (source, dest, data, done) {
     return line + '\n'
   }
 
-  function complete () {
+  function complete (err) {
+    if (err) {
+      count = 0
+      done(err)
+      return
+    }
+
     count--
     if (count === 0) { done() }
   }
@@ -74,3 +80,5 @@ function execute () {
 
   generify(source, dest, json)
 }
+
+if (require.main === module) execute()
