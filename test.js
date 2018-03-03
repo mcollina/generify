@@ -1,13 +1,13 @@
 'use strict'
 
-var generify = require('./')
-var test = require('tape')
-var walker = require('walker')
-var fs = require('fs')
-var path = require('path')
-var osenv = require('osenv')
-var rimraf = require('rimraf')
-var base = './fixture'
+const generify = require('./')
+const test = require('tap').test
+const walker = require('walker')
+const fs = require('fs')
+const path = require('path')
+const osenv = require('osenv')
+const rimraf = require('rimraf')
+const base = './fixture'
 
 fs.readdir('./fixture', function (err, fixtures) {
   if (err) {
