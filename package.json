@@ -4,7 +4,7 @@
   "description": "A reusable project generator",
   "main": "generify.js",
   "scripts": {
-    "test": "standard | snazzy && tap test.js"
+    "test": "standard | snazzy && tap test/*.js"
   },
   "bin": {
     "generify": "./generify.js"
