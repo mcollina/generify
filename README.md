@@ -1,23 +1,24 @@
-generify
-========
+# generify
 
 A reusable project generator that _copies file recursively_, while
 replacing keywords from passed data.
 
-Example
--------
+## Example
 
 ```js
-var generify  = require('generify')
-  , source    = './template'
-  , dest      = '/tmp/generify-test'
-  , data      = { hello: 'hello world' }
+'use strict'
+
+const generify = require('generify')
+const source = './template'
+const dest = '/tmp/generify-test'
+const data = { hello: 'hello world' }
 
 generify(source, dest, data, function(err) {
-  if (err)
+  if (err) {
     console.log(err)
-  else
+  } else {
     console.log('ok!')
+  }
 })
 ```
 
@@ -30,8 +31,7 @@ If a file begins with `__` that will be automatically converted into a
 `.`. This is useful for generating `.gitignore` files, as on NPM a
 `.gitignore` file will be automatically converted into a `.npmignore`.
 
-Executable
-----------
+## Executable
 
 __generify__ also offers an executable that can be called with:
 
@@ -39,12 +39,10 @@ __generify__ also offers an executable that can be called with:
 
 Where the json file contains the data to be replaced.
 
-Acknowledgements
-----------------
+## Acknowledgements
 
 This project was kindly sponsored by [nearForm](http://nearform.com).
 
-License
--------
+## License
 
 MIT
