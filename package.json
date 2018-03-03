@@ -4,7 +4,7 @@
   "description": "A reusable project generator",
   "main": "generify.js",
   "scripts": {
-    "test": "tape test.js | faucet"
+    "test": "standard | snazzy && tape test.js | faucet"
   },
   "bin": {
     "generify": "./generify.js"
@@ -27,7 +27,10 @@
   "devDependencies": {
     "faucet": "0.0.1",
     "osenv": "^0.1.0",
+    "pre-commit": "^1.2.2",
     "rimraf": "^2.2.8",
+    "snazzy": "^7.1.1",
+    "standard": "^11.0.0",
     "tape": "^3.0.0"
   },
   "dependencies": {
