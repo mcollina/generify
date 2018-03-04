@@ -1,4 +1,4 @@
-# generify
+# generify&nbsp;&nbsp;[![Build Status](https://travis-ci.org/mcollina/generify.svg?branch=master)](https://travis-ci.org/mcollina/generify)
 
 A reusable project generator that _copies file recursively_, while
 replacing keywords from passed data.
@@ -28,8 +28,7 @@ with the `'hello world'` string.
 ### `__` handling
 
 If a file begins with `__` that will be automatically converted into a
-`.`. This is useful for generating `.gitignore` files, as on NPM a
-`.gitignore` file will be automatically converted into a `.npmignore`.
+`.`. This is useful for generating `.gitignore` files.
 
 ## Executable
 
