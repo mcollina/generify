@@ -83,7 +83,18 @@ function execute () {
     json = JSON.parse(fs.readFileSync(process.argv[4]))
   }
 
-  generify(source, dest, json)
+  generify(source, dest, json, onData, done)
+
+  function onData (file) {
+    console.log('> writing ' + file)
+  }
+
+  function done (err) {
+    if (err) {
+      throw err
+    }
+    console.log('> completed ' + dest)
+  }
 }
 
 if (require.main === module) execute()
