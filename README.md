@@ -13,13 +13,29 @@ const source = './template'
 const dest = '/tmp/generify-test'
 const data = { hello: 'hello world' }
 
-generify(source, dest, data, function(err) {
+// without notification
+generify(source, dest, data, function (err) {
   if (err) {
     console.log(err)
   } else {
     console.log('ok!')
   }
 })
+
+// with notification
+generify(source, dest, data, onData, done)
+
+function onData (file) {
+  console.log('writing file')
+}
+
+function done (err) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('ok!')
+  }
+}
 ```
 
 This will replace all the `__hello__` patterns found in all files

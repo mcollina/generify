@@ -11,14 +11,18 @@ const pump = require('pump')
 
 module.exports = generify
 
-function generify (source, dest, data, done) {
+function generify (source, dest, data, onFile, done) {
   var count = 1 // the walker counts as 1
   var keys = Object.keys(data)
 
   // needed for the path replacing to work
   source = path.resolve(source)
 
-  if (!done) done = function () {}
+  if (typeof done !== 'function') {
+    done = onFile
+    onFile = function () {}
+  }
+
   if (!data) data = {}
 
   walker(source)
@@ -32,6 +36,7 @@ function generify (source, dest, data, done) {
         if (err) return complete(err)
 
         copyAndReplace(file, destFile)
+        onFile(relativePath)
       })
     })
     .on('end', complete)
