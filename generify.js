@@ -14,6 +14,12 @@ module.exports = generify
 function generify (source, dest, data, onFile, done) {
   var count = 1 // the walker counts as 1
   var keys = Object.keys(data)
+  var copyFilesAsNamed = data.copyAsNamed
+  if (copyFilesAsNamed) {
+    delete data.copyAsNamed
+  } else {
+    copyFilesAsNamed = []
+  }
 
   // needed for the path replacing to work
   source = path.resolve(source)
@@ -27,7 +33,12 @@ function generify (source, dest, data, onFile, done) {
 
   walker(source)
     .on('file', function (file) {
-      var relativePath = path.relative(source, file).replace(/^__/, '.')
+      var relativePath
+      if (copyFilesAsNamed.includes(path.basename(file))) {
+        relativePath = path.relative(source, file)
+      } else {
+        relativePath = path.relative(source, file).replace(/^__/, '.')
+      }
       var destFile = path.join(dest, relativePath)
 
       count++

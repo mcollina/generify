@@ -46,6 +46,11 @@ with the `'hello world'` string.
 If a file begins with `__` that will be automatically converted into a
 `.`. This is useful for generating `.gitignore` files.
 
+If the supplied `data` has a key `copyAsNamed`, with an array of names, then
+the filenames in that list will not be processed through this rule. Each file
+name in the list should not include a path,
+e.g. `['__do-not-replace-underscores.js']`.
+
 ## Executable
 
 __generify__ also offers an executable that can be called with:
