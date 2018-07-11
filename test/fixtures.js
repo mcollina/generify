@@ -62,6 +62,10 @@ function createTest (err, expected, fixture) {
     var dest = path.join(osenv.tmpdir(), 'generify', fixture)
     var data = { hello: 'hello world' }
 
+    if (fixture === 'init') {
+      data.copyAsNamed = ['__init__.py']
+    }
+
     generify(path.join(base, fixture), dest, data, function (err) {
       t.notOk(err, 'no error')
       walker(dest)
