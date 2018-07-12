@@ -63,7 +63,7 @@ function generify (source, dest, data, onFile, done) {
 
   function replaceLine (line) {
     keys.forEach(function (key) {
-      line = line.replace('__' + key + '__', data[key])
+      line = line.replace(new RegExp('__' + key + '__', 'g'), data[key])
     })
     return line + '\n'
   }
