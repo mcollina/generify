@@ -8,6 +8,7 @@ const path = require('path')
 const split = require('split2')
 const mkdirp = require('mkdirp')
 const pump = require('pump')
+const os = require('os')
 
 module.exports = generify
 
@@ -65,7 +66,7 @@ function generify (source, dest, data, onFile, done) {
     keys.forEach(function (key) {
       line = line.replace(new RegExp('__' + key + '__', 'g'), data[key])
     })
-    return line + '\n'
+    return line + os.EOL
   }
 
   function complete (err) {

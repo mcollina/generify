@@ -66,7 +66,7 @@ function createTest (err, expected, fixture) {
       data.copyAsNamed = ['__init__.py']
     }
 
-    var expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^\//, '')))
+    var expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^[/\\]+/, '')))
 
     function onFile (file) {
       t.ok(expectedSet.has(file))
