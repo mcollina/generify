@@ -1,6 +1,6 @@
 {
   "name": "generify",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A reusable project generator",
   "main": "generify.js",
   "scripts": {
