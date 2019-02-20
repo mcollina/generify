@@ -1,6 +1,6 @@
 {
   "name": "generify",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A reusable project generator",
   "main": "generify.js",
   "scripts": {
@@ -27,10 +27,10 @@
   "devDependencies": {
     "osenv": "^0.1.0",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.2.8",
-    "snazzy": "^7.1.1",
-    "standard": "^11.0.0",
-    "tap": "^12.0.0"
+    "rimraf": "^2.6.3",
+    "snazzy": "^8.0.0",
+    "standard": "^12.0.1",
+    "tap": "^12.5.3"
   },
   "dependencies": {
     "isbinaryfile": "^3.0.2",
