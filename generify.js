@@ -9,7 +9,7 @@ const split = require('split2')
 const mkdirp = require('mkdirp')
 const pump = require('pump')
 const os = require('os')
-const isBinaryFile = require('isbinaryfile')
+const { isBinaryFile } = require('isbinaryfile')
 
 module.exports = generify
 
@@ -62,9 +62,7 @@ function generify (source, dest, data, onFile, done) {
     .on('error', done)
 
   function copyAndReplace (source, dest) {
-    isBinaryFile(source, function (err, isBinary) {
-      if (err) return complete(err)
-
+    isBinaryFile(source).then(function (isBinary) {
       if (isBinary) {
         pump(
           fs.createReadStream(source),
@@ -77,7 +75,7 @@ function generify (source, dest, data, onFile, done) {
           fs.createWriteStream(dest),
           complete)
       }
-    })
+    }, complete)
   }
 
   function replacer () {

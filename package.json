@@ -4,7 +4,7 @@
   "description": "A reusable project generator",
   "main": "generify.js",
   "scripts": {
-    "test": "standard | snazzy && tap test/*.js"
+    "test": "standard | snazzy && tap --no-esm test/*.js"
   },
   "bin": {
     "generify": "./generify.js"
@@ -27,16 +27,16 @@
   "devDependencies": {
     "osenv": "^0.1.0",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "snazzy": "^8.0.0",
-    "standard": "^12.0.1",
-    "tap": "^12.5.3"
+    "standard": "^14.0.0",
+    "tap": "^14.0.0"
   },
   "dependencies": {
-    "isbinaryfile": "^3.0.2",
+    "isbinaryfile": "^4.0.2",
     "mkdirp": "^0.5.0",
     "pump": "^3.0.0",
-    "split2": "^2.0.0",
+    "split2": "^3.0.0",
     "walker": "^1.0.6"
   }
 }
