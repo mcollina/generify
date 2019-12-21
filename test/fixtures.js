@@ -65,6 +65,15 @@ function createTest (err, expected, fixture) {
     if (fixture === 'init') {
       data.copyAsNamed = ['__init__.py']
     }
+    if (fixture === 'transforms') {
+      data.transforms = {
+        foo: (d, ctx) => {
+          if (ctx.dest.endsWith('b')) return d
+          return d.toUpperCase()
+        }
+      }
+      data.foo = 'foo'
+    }
 
     generify(path.join(base, fixture), dest, data, function (err) {
       t.notOk(err, 'no error')

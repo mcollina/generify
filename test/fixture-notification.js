@@ -65,6 +65,15 @@ function createTest (err, expected, fixture) {
     if (fixture === 'init') {
       data.copyAsNamed = ['__init__.py']
     }
+    if (fixture === 'transforms') {
+      data.transforms = {
+        foo: (d, ctx) => {
+          if (ctx.dest.endsWith('b')) return d
+          return d.toUpperCase()
+        }
+      }
+      data.foo = 'foo'
+    }
 
     var expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^[/\\]+/, '')))
 

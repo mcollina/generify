@@ -22,6 +22,12 @@ function generify (source, dest, data, onFile, done) {
   } else {
     copyFilesAsNamed = []
   }
+  var transforms = data.transforms
+  if (transforms) {
+    delete data.transforms
+  } else {
+    transforms = {}
+  }
 
   // needed for the path replacing to work
   source = path.resolve(source)
@@ -67,16 +73,31 @@ function generify (source, dest, data, onFile, done) {
       } else {
         pump(
           fs.createReadStream(source),
-          split(replaceLine),
+          split(replaceLine.bind({ source, dest })),
           fs.createWriteStream(dest),
           complete)
       }
     })
   }
 
+  function replacer () {
+    if (transforms[this.key]) {
+      return transforms[this.key](data[this.key], {
+        souce: this.source,
+        dest: this.dest,
+        key: this.key
+      })
+    }
+    return data[this.key]
+  }
+
   function replaceLine (line) {
+    const ctx = { source: this.source, dest: this.dest }
     keys.forEach(function (key) {
-      line = line.replace(new RegExp('__' + key + '__', 'g'), data[key])
+      line = line.replace(
+        new RegExp('__' + key + '__', 'g'),
+        replacer.bind({ ...ctx, key })
+      )
     })
     return line + os.EOL
   }

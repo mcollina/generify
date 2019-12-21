@@ -41,6 +41,23 @@ function done (err) {
 This will replace all the `__hello__` patterns found in all files
 with the `'hello world'` string.
 
+If the supplied `data` has a key `transforms`, with a hash of tranformation
+functions, then the found tokens will be used to run a corresponding
+transform on the supplied data. Example:
+
+```js
+const data = {
+  transforms: { foo: (data, context) => data.toUpperCase() },
+  foo: 'foo'
+}
+
+// __foo__ => foo_transform(data = 'foo') => 'FOO'
+```
+
+The `context` object contains properties: `source` (input file path),
+`dest` (output file path), `key` (the matched key).
+
+
 ### `__` handling
 
 If a file begins with `__` that will be automatically converted into a
