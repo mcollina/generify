@@ -1,4 +1,4 @@
-# generify&nbsp;&nbsp;[![Build Status](https://travis-ci.org/mcollina/generify.svg?branch=master)](https://travis-ci.org/mcollina/generify)
+# generify&nbsp;&nbsp;![Build Status](https://github.com/mcollina/generify/workflows/ci/badge.svg)
 
 A reusable project generator that _copies file recursively_, while
 replacing keywords from passed data.
