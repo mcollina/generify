@@ -6,10 +6,10 @@ const test = t.test
 const walker = require('walker')
 const fs = require('fs')
 const path = require('path')
-const osenv = require('osenv')
 const rimraf = require('rimraf')
 const base = path.join(__dirname, 'fixtures')
 
+const testRun = 'fixture-notification-' + new Date().getTime()
 const fixtures = fs.readdirSync(base).filter((d) => !d.match(/expected$/))
 
 t.plan(fixtures.length)
@@ -59,7 +59,7 @@ function createTest (err, expected, fixture) {
     t.plan(Object.keys(expected).length * 3 + 4)
     t.error(err)
 
-    var dest = path.join(osenv.tmpdir(), 'generify', fixture)
+    var dest = path.join(process.cwd(), 'test-runs', testRun, fixture)
     var data = { hello: 'hello world' }
 
     if (fixture === 'init') {

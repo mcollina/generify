@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/mcollina/generify",
   "devDependencies": {
-    "osenv": "^0.1.0",
     "pre-commit": "^1.2.2",
     "rimraf": "^3.0.0",
     "snazzy": "^8.0.0",
