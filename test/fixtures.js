@@ -75,6 +75,10 @@ function createTest (err, expected, fixture) {
       data.foo = 'foo'
     }
 
+    if (fixture === 'nested') {
+      data.foo = { more: { nesting: 'oh gee' } }
+    }
+
     generify(path.join(base, fixture), dest, data, function (err) {
       t.notOk(err, 'no error')
       walker(dest)

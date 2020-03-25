@@ -31,3 +31,6 @@ node_modules
 
 # Code coverage
 .nyc_output
+
+# package lock is not libraries
+package-lock.json

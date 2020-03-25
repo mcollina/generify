@@ -28,7 +28,7 @@
     "pre-commit": "^1.2.2",
     "rimraf": "^3.0.0",
     "snazzy": "^8.0.0",
-    "standard": "^14.0.0",
+    "standard": "^14.3.3",
     "tap": "^14.0.0"
   },
   "dependencies": {

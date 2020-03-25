@@ -15,7 +15,6 @@ module.exports = generify
 
 function generify (source, dest, data, onFile, done) {
   var count = 1 // the walker counts as 1
-  var keys = Object.keys(data)
   var copyFilesAsNamed = data.copyAsNamed
   if (copyFilesAsNamed) {
     delete data.copyAsNamed
@@ -80,23 +79,24 @@ function generify (source, dest, data, onFile, done) {
 
   function replacer () {
     if (transforms[this.key]) {
-      return transforms[this.key](data[this.key], {
+      return transforms[this.key](getNestedValue(data, this.key), {
         souce: this.source,
         dest: this.dest,
         key: this.key
       })
     }
-    return data[this.key]
+    return getNestedValue(data, this.key)
   }
 
   function replaceLine (line) {
     const ctx = { source: this.source, dest: this.dest }
-    keys.forEach(function (key) {
+    const matches = matchAll(line, /__([a-zA-Z/\\.]*?)__/g)
+    for (const match of matches) {
       line = line.replace(
-        new RegExp('__' + key + '__', 'g'),
-        replacer.bind({ ...ctx, key })
+        new RegExp('__' + match[1] + '__', 'g'),
+        replacer.bind({ ...ctx, key: match[1] })
       )
-    })
+    }
     return line + os.EOL
   }
 
@@ -110,6 +110,27 @@ function generify (source, dest, data, onFile, done) {
     count--
     if (count === 0) { done() }
   }
+}
+
+/**
+ * Added for support of node versions < 12, since String.prototype.matchAll is only node >= 12
+ */
+function * matchAll (str, regexp) {
+  const flags = regexp.global ? regexp.flags : regexp.flags + 'g'
+  const re = new RegExp(regexp, flags)
+  let match
+  while ((match = re.exec(str))) {
+    yield match
+  }
+}
+
+function getNestedValue (obj, key) {
+  return key.split('.').reduce(function (result, key) {
+    if (!result || !key) {
+      return 'notFound'
+    }
+    return result[key]
+  }, obj)
 }
 
 function execute () {

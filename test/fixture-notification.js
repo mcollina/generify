@@ -75,6 +75,10 @@ function createTest (err, expected, fixture) {
       data.foo = 'foo'
     }
 
+    if (fixture === 'nested') {
+      data.foo = { more: { nesting: 'oh gee' } }
+    }
+
     var expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^[/\\]+/, '')))
 
     function onFile (file) {
