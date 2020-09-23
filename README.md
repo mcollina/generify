@@ -57,6 +57,28 @@ const data = {
 The `context` object contains properties: `source` (input file path),
 `dest` (output file path), `key` (the matched key).
 
+### Files and Directories
+
+files and directories located in the template folder may also be replaced. File and folder names wrapped with `@` delimiters will be replaced.
+
+#### Example
+
+Given a template with:
+
+`/template/@foo@/@bar@.txt`
+
+and data:
+
+```js
+const data = {
+  foo: 'hello',
+  bar: 'world'
+}
+```
+
+The outputted file will be:
+
+`<dest>/hello/world.txt`
 
 ### `__` handling
 

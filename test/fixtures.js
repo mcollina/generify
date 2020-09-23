@@ -41,9 +41,7 @@ function prepareExpectedData (path, fixture, cb) {
           if (err) {
             return cb(err)
           }
-
           expected[file.replace(path, '')] = data.toString()
-
           count++
           if (count === files.length) {
             cb(null, expected, fixture)
@@ -60,7 +58,14 @@ function createTest (err, expected, fixture) {
     t.error(err)
 
     var dest = path.join(process.cwd(), 'test-runs', testRun, fixture)
-    var data = { hello: 'hello world' }
+    var data = {
+      hello: 'hello world',
+      testfilename: 'newname',
+      testdirname: 'newdir',
+      nested: {
+        bar: 'nest hello world'
+      }
+    }
 
     if (fixture === 'init') {
       data.copyAsNamed = ['__init__.py']

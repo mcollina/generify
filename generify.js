@@ -45,7 +45,9 @@ function generify (source, dest, data, onFile, done) {
         relativePath = path.relative(source, file)
       } else {
         relativePath = path.relative(source, file).replace(/^__/, '.')
+        relativePath = replacePath.bind({ source })(relativePath)
       }
+
       var destFile = path.join(dest, relativePath)
 
       count++
@@ -86,6 +88,18 @@ function generify (source, dest, data, onFile, done) {
       })
     }
     return getNestedValue(data, this.key)
+  }
+
+  function replacePath (relpath) {
+    const ctx = { source: this.source }
+    const matches = matchAll(relpath, /@([a-zA-Z/\\.]*?)@/g)
+    for (const [, key] of matches) {
+      relpath = relpath.replace(
+        new RegExp('@' + key + '@'),
+        replacer.bind({ ...ctx, key })
+      )
+    }
+    return relpath
   }
 
   function replaceLine (line) {

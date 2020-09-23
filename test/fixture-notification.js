@@ -60,7 +60,14 @@ function createTest (err, expected, fixture) {
     t.error(err)
 
     var dest = path.join(process.cwd(), 'test-runs', testRun, fixture)
-    var data = { hello: 'hello world' }
+    var data = {
+      hello: 'hello world',
+      testfilename: 'newname',
+      testdirname: 'newdir',
+      nested: {
+        bar: 'nest hello world'
+      }
+    }
 
     if (fixture === 'init') {
       data.copyAsNamed = ['__init__.py']
