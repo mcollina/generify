@@ -6,22 +6,22 @@ const walker = require('walker')
 const fs = require('fs')
 const path = require('path')
 const split = require('split2')
-const mkdirp = require('mkdirp')
 const pump = require('pump')
 const os = require('os')
 const { isBinaryFile } = require('isbinaryfile')
+const { mkdir } = fs
 
 module.exports = generify
 
 function generify (source, dest, data, onFile, done) {
-  var count = 1 // the walker counts as 1
-  var copyFilesAsNamed = data.copyAsNamed
+  let count = 1 // the walker counts as 1
+  let copyFilesAsNamed = data.copyAsNamed
   if (copyFilesAsNamed) {
     delete data.copyAsNamed
   } else {
     copyFilesAsNamed = []
   }
-  var transforms = data.transforms
+  let transforms = data.transforms
   if (transforms) {
     delete data.transforms
   } else {
@@ -40,7 +40,7 @@ function generify (source, dest, data, onFile, done) {
 
   walker(source)
     .on('file', function (file) {
-      var relativePath
+      let relativePath
       if (copyFilesAsNamed.includes(path.basename(file))) {
         relativePath = path.relative(source, file)
       } else {
@@ -48,11 +48,11 @@ function generify (source, dest, data, onFile, done) {
         relativePath = replacePath.bind({ source })(relativePath)
       }
 
-      var destFile = path.join(dest, relativePath)
+      const destFile = path.join(dest, relativePath)
 
       count++
 
-      mkdirp(path.dirname(destFile), function (err) {
+      mkdir(path.dirname(destFile), { recursive: true }, function (err) {
         if (err) return complete(err)
 
         copyAndReplace(file, destFile)
@@ -153,9 +153,9 @@ function execute () {
     process.exit(1)
   }
 
-  var source = process.argv[2]
-  var dest = process.argv[3]
-  var json = {}
+  const source = process.argv[2]
+  const dest = process.argv[3]
+  let json = {}
 
   if (process.argv[4]) {
     json = JSON.parse(fs.readFileSync(process.argv[4]))

@@ -16,7 +16,7 @@ t.plan(fixtures.length)
 fixtures.forEach(setup)
 
 function setup (fixture) {
-  var expectedPath = path.join(base, fixture + '-expected')
+  let expectedPath = path.join(base, fixture + '-expected')
 
   fs.stat(expectedPath, (err, stat) => {
     if (err || !stat || !stat.isDirectory()) {
@@ -27,9 +27,9 @@ function setup (fixture) {
 }
 
 function prepareExpectedData (path, fixture, cb) {
-  var expected = {}
-  var files = []
-  var count = 0
+  const expected = {}
+  const files = []
+  let count = 0
 
   walker(path)
     .on('file', function (file) {
@@ -59,8 +59,8 @@ function createTest (err, expected, fixture) {
     t.plan(Object.keys(expected).length * 3 + 4)
     t.error(err)
 
-    var dest = path.join(process.cwd(), 'test-runs', testRun, fixture)
-    var data = {
+    const dest = path.join(process.cwd(), 'test-runs', testRun, fixture)
+    const data = {
       hello: 'hello world',
       testfilename: 'newname',
       testdirname: 'newdir',
@@ -86,7 +86,7 @@ function createTest (err, expected, fixture) {
       data.foo = { more: { nesting: 'oh gee' } }
     }
 
-    var expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^[/\\]+/, '')))
+    const expectedSet = new Set(Object.keys(expected).map(f => f.replace(/^[/\\]+/, '')))
 
     function onFile (file) {
       t.ok(expectedSet.has(file))
